@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET admin page. */
-
-
+/* GET home page. */
+router.get('/shop', function(req, res, next) {
+    res.render('shop');
+});
 module.exports = router;

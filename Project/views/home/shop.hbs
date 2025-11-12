@@ -1,136 +1,156 @@
+<style>
+    .product-card {
+        overflow: hidden;
+        width: 85%;
+        margin: auto;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        background: none;
+    }
+
+    .product-card img {
+        width: 100%;
+        display: block;
+        border-radius: 0; /* KHÔNG BO GÓC */
+    }
+
+    .product-info {
+        text-align: center;
+        padding: 14px 0;
+    }
+
+    .product-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+        color: #221f1b;
+    }
+
+    .product-price {
+        color: #e63946;
+        font-weight: bold;
+        margin: 6px 0;
+    }
+
+    .add-cart-btn {
+        background-color:#ffb6c1;
+        color:white;
+        border:none;
+        border-radius:8px;
+        padding: 8px 18px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .add-cart-btn:hover {
+        opacity: 0.85;
+    }
+</style>
+
+
+
 <div class="row g-4">
-    <!-- SP 1 -->
+
     <div class="col-md-3">
-        <div class="card border-0 shadow-sm"
-             style="border-radius: 30px; overflow:hidden;width: 85%; margin: auto;">
-            <img src="img/3.jpg"
-                 class="card-img-top" alt="Hoa hồng trắng">
-            <div class="card-body text-center">
-                <h5 class="card-title">Hoa hồng trắng</h5>
-                <p class="text-danger fw-bold">1.560.000₫</p>
-                <a href="#"
-                   class="btn fw-bold px-4 py-2"
-                   style="background-color:#ffb6c1; color:white; border:none; border-radius:8px; transition:0.3s;">
-                    Thêm vào giỏ hàng
-                </a>
+        <div class="product-card">
+            <img src="img/6.jpg" alt="Hoa hồng trắng">
+
+            <div class="product-info">
+                <p class="product-title">Hoa hồng trắng</p>
+                <p class="product-price">1.560.000₫</p>
+
+                <a href="#" class="add-cart-btn">Buy now</a>
             </div>
         </div>
     </div>
+
+
     <div class="col-md-3">
-        <div class="card border-0 shadow-sm"
-             style="border-radius: 30px; overflow: hidden;width: 85%; margin: auto;">
-            <img src="img/4.jpg"
-                 class="card-img-top" alt="Giỏ hoa">
-            <div class="card-body text-center">
-                <h5 class="card-title">Giỏ hoa</h5>
-                <p class="text-danger fw-bold">1.000.000₫</p>
-                <a href="#"
-                   class="btn fw-bold px-4 py-2"
-                   style="background-color:#ffb6c1; color:white; border:none; border-radius:8px; transition:0.3s;">
-                    Thêm vào giỏ hàng
-                </a>
+        <div class="product-card">
+            <img src="img/5.jpg" alt="Hoa hướng dương">
+
+            <div class="product-info">
+                <p class="product-title">Hướng dương</p>
+                <p class="product-price">1.000.000₫</p>
+
+                <a href="#" class="add-cart-btn">Buy now</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-3">
+        <div class="product-card">
+            <img src="img/8.jpg" alt=" ">
+
+            <div class="product-info">
+                <p class="product-title">Xương rồng</p>
+                <p class="product-price">450.000₫</p>
+
+                <a href="#" class="add-cart-btn">Buy now</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="card border-0 shadow-sm"
-             style="border-radius: 30px; overflow: hidden;width: 85%; margin: auto;">
-            <img src="img/5.jpg"
-                 class="card-img-top" alt="Giỏ hoa hồng">
-            <div class="card-body text-center">
-                <h5 class="card-title">Giỏ hoa hồng</h5>
-                <p class="text-danger fw-bold">1.000.000₫</p>
-                <a href="#"
-                   class="btn fw-bold px-4 py-2"
-                   style="background-color:#ffb6c1; color:white; border:none; border-radius:8px; transition:0.3s;">
-                    Thêm vào giỏ hàng
-                </a>
+        <div class="product-card">
+            <img src="img/7.jpg" alt=" ">
+
+            <div class="product-info">
+                <p class="product-title">Tulips</p>
+                <p class="product-price">1.450.000₫</p>
+
+                <a href="#" class="add-cart-btn">Buy now</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="card border-0 shadow-sm"
-             style="border-radius: 30px; overflow: hidden;width: 85%; margin: auto;">
-            <img src="img/6.jpg"
-                 class="card-img-top" alt="Xương rồng">
-            <div class="card-body text-center">
-                <h5 class="card-title">Xương rồng</h5>
-                <p class="text-danger fw-bold">450.000₫</p>
-                <a href="#"
-                   class="btn fw-bold px-4 py-2"
-                   style="background-color:#ffb6c1; color:white; border:none; border-radius:8px; transition:0.3s;">
-                    Thêm vào giỏ hàng
-                </a>
+        <div class="product-card">
+            <img src="img/9.jpg" alt="">
+
+            <div class="product-info">
+                <p class="product-title">Tulips</p>
+                <p class="product-price">2.000.000₫</p>
+
+                <a href="#" class="add-cart-btn">Buy now</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="card border-0 shadow-sm"
-             style="border-radius: 30px; overflow: hidden;width: 85%; margin: auto;">
-            <img src="img/12.jpg"
-                 class="card-img-top" alt="Hoa tulip">
-            <div class="card-body text-center">
-                <h5 class="card-title">Hoa tulip</h5>
-                <p class="text-danger fw-bold">1.350.000₫</p>
-                <a href="#"
-                   class="btn fw-bold px-4 py-2"
-                   style="background-color:#ffb6c1; color:white; border:none; border-radius:8px; transition:0.3s;">
-                    Thêm vào giỏ hàng
-                </a>
+        <div class="product-card">
+            <img src="img/10.jpg" alt="">
+            <div class="product-info">
+                <p class="product-title">Hoa hồng</p>
+                <p class="product-price">2.200.000₫</p>
+
+                <a href="#" class="add-cart-btn">Buy Now</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="card border-0 shadow-sm"
-             style="border-radius: 30px; overflow: hidden;width: 85%; margin: auto;">
-            <img src="img/13.jpg"
-                 class="card-img-top" alt="Hoa hướng dương">
-            <div class="card-body text-center">
-                <h5 class="card-title">Hoa hướng dương</h5>
-                <p class="text-danger fw-bold">1.440.000₫</p>
-                <a href="#"
-                   class="btn fw-bold px-4 py-2"
-                   style="background-color:#ffb6c1; color:white; border:none; border-radius:8px; transition:0.3s;">
-                    Thêm vào giỏ hàng
-                </a>
+        <div class="product-card">
+            <img src="img/11.jpg" alt="">
+
+            <div class="product-info">
+                <p class="product-title">Cẩm tú cầu</p>
+                <p class="product-price">450.000₫</p>
+
+                <a href="#" class="add-cart-btn">Buy now</a>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="card border-0 shadow-sm"
-             style="border-radius: 30px; overflow: hidden;width: 85%; margin: auto;">
-            <img src="img/14.jpg"
-                 class="card-img-top" alt="Hoa s">
-            <div class="card-body text-center">
-                <h5 class="card-title">Hoa </h5>
-                <p class="text-danger fw-bold">1.500.000₫</p>
-                <a href="#"
-                   class="btn fw-bold px-4 py-2"
-                   style="background-color:#ffb6c1; color:white; border:none; border-radius:8px; transition:0.3s;">
-                    Thêm vào giỏ hàng
-                </a>
-            </div>
-        </div>
-    </div>
+        <div class="product-card">
+            <img src="img/12.jpg" alt="">
 
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm"
-             style="border-radius: 30px; overflow: hidden;width: 85%; margin: auto;">
-            <img src="img/15.jpg"
-                 class="card-img-top" alt="Hoa ">
-            <div class="card-body text-center">
-                <h5 class="card-title">Hoa </h5>
-                <p class="text-danger fw-bold">1.500.000₫</p>
-                <a href="#"
-                   class="btn fw-bold px-4 py-2"
-                   style="background-color:#ffb6c1; color:white; border:none; border-radius:8px; transition:0.3s;">
-                    Thêm vào giỏ hàng
-                </a>
+            <div class="product-info">
+                <p class="product-title">Giỏ hoa </p>
+                <p class="product-price">1.150.000₫</p>
+
+                <a href="#" class="add-cart-btn">Buy now</a>
             </div>
         </div>
     </div>
