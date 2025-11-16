@@ -1,21 +1,33 @@
 <style>
     .product-card {
         overflow: hidden;
-        width: 85%;
+        width: 90%;
         margin: auto;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        background: none;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        background: #fff;
+        border-radius: 12px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
     }
 
     .product-card img {
         width: 100%;
         display: block;
-        border-radius: 0; /* KHÔNG BO GÓC */
+        border-radius: 12px 12px 0 0; /* bo nhẹ phía trên */
+        transition: transform 0.3s ease;
+    }
+
+    .product-card img:hover {
+        transform: scale(1.05);
     }
 
     .product-info {
         text-align: center;
-        padding: 14px 0;
+        padding: 16px;
     }
 
     .product-title {
@@ -26,132 +38,110 @@
     }
 
     .product-price {
-        color: #e63946;
+        color: #e9a1a1;
         font-weight: bold;
-        margin: 6px 0;
+        margin: 6px 0 12px 0;
+        font-size: 16px;
     }
 
     .add-cart-btn {
-        background-color:#ffb6c1;
+        background-color: #e9a1a1;
         color:white;
         border:none;
         border-radius:8px;
-        padding: 8px 18px;
+        padding: 10px 22px;
         font-weight: bold;
+        font-size: 14px;
+        text-transform: uppercase;
         transition: 0.3s;
     }
 
     .add-cart-btn:hover {
         opacity: 0.85;
+        transform: translateY(-2px);
+    }
+
+    /* Grid */
+    .product-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+        padding: 50px 5%;
     }
 </style>
 
+<div class="product-row">
 
-
-<div class="row g-4">
-
-    <div class="col-md-3">
-        <div class="product-card">
-            <img src="img/6.jpg" alt="Hoa hồng trắng">
-
-            <div class="product-info">
-                <p class="product-title">Hoa hồng trắng</p>
-                <p class="product-price">1.560.000₫</p>
-
-                <a href="#" class="add-cart-btn">Buy now</a>
-            </div>
+    <div class="product-card">
+        <img src="img/6.jpg" alt="White Roses">
+        <div class="product-info">
+            <p class="product-title">White Roses</p>
+            <p class="product-price">$68.00</p>
+            <a href="#" class="add-cart-btn">Buy Now</a>
         </div>
     </div>
 
-
-    <div class="col-md-3">
-        <div class="product-card">
-            <img src="img/5.jpg" alt="Hoa hướng dương">
-
-            <div class="product-info">
-                <p class="product-title">Hướng dương</p>
-                <p class="product-price">1.000.000₫</p>
-
-                <a href="#" class="add-cart-btn">Buy now</a>
-            </div>
+    <div class="product-card">
+        <img src="img/5.jpg" alt="Sunflower">
+        <div class="product-info">
+            <p class="product-title">Sunflower</p>
+            <p class="product-price">$45.00</p>
+            <a href="#" class="add-cart-btn">Buy Now</a>
         </div>
     </div>
 
-
-    <div class="col-md-3">
-        <div class="product-card">
-            <img src="img/8.jpg" alt=" ">
-
-            <div class="product-info">
-                <p class="product-title">Xương rồng</p>
-                <p class="product-price">450.000₫</p>
-
-                <a href="#" class="add-cart-btn">Buy now</a>
-            </div>
+    <div class="product-card">
+        <img src="img/8.jpg" alt="Cactus">
+        <div class="product-info">
+            <p class="product-title">Cactus</p>
+            <p class="product-price">$25.00</p>
+            <a href="#" class="add-cart-btn">Buy Now</a>
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="product-card">
-            <img src="img/7.jpg" alt=" ">
-
-            <div class="product-info">
-                <p class="product-title">Tulips</p>
-                <p class="product-price">1.450.000₫</p>
-
-                <a href="#" class="add-cart-btn">Buy now</a>
-            </div>
+    <div class="product-card">
+        <img src="img/7.jpg" alt="Tulips">
+        <div class="product-info">
+            <p class="product-title">Tulips</p>
+            <p class="product-price">$62.00</p>
+            <a href="#" class="add-cart-btn">Buy Now</a>
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="product-card">
-            <img src="img/9.jpg" alt="">
-
-            <div class="product-info">
-                <p class="product-title">Tulips</p>
-                <p class="product-price">2.000.000₫</p>
-
-                <a href="#" class="add-cart-btn">Buy now</a>
-            </div>
+    <div class="product-card">
+        <img src="img/9.jpg" alt="Tulips">
+        <div class="product-info">
+            <p class="product-title">Tulips</p>
+            <p class="product-price">$85.00</p>
+            <a href="#" class="add-cart-btn">Buy Now</a>
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="product-card">
-            <img src="img/10.jpg" alt="">
-            <div class="product-info">
-                <p class="product-title">Hoa hồng</p>
-                <p class="product-price">2.200.000₫</p>
-
-                <a href="#" class="add-cart-btn">Buy Now</a>
-            </div>
+    <div class="product-card">
+        <img src="img/10.jpg" alt="Red Roses">
+        <div class="product-info">
+            <p class="product-title">Red Roses</p>
+            <p class="product-price">$90.00</p>
+            <a href="#" class="add-cart-btn">Buy Now</a>
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="product-card">
-            <img src="img/11.jpg" alt="">
-
-            <div class="product-info">
-                <p class="product-title">Cẩm tú cầu</p>
-                <p class="product-price">450.000₫</p>
-
-                <a href="#" class="add-cart-btn">Buy now</a>
-            </div>
+    <div class="product-card">
+        <img src="img/11.jpg" alt="Hydrangea">
+        <div class="product-info">
+            <p class="product-title">Hydrangea</p>
+            <p class="product-price">$30.00</p>
+            <a href="#" class="add-cart-btn">Buy Now</a>
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="product-card">
-            <img src="img/12.jpg" alt="">
-
-            <div class="product-info">
-                <p class="product-title">Giỏ hoa </p>
-                <p class="product-price">1.150.000₫</p>
-
-                <a href="#" class="add-cart-btn">Buy now</a>
-            </div>
+    <div class="product-card">
+        <img src="img/12.jpg" alt="Flower Basket">
+        <div class="product-info">
+            <p class="product-title">Flower Basket</p>
+            <p class="product-price">$55.00</p>
+            <a href="#" class="add-cart-btn">Buy Now</a>
         </div>
     </div>
+
 </div>
