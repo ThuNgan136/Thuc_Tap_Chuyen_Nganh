@@ -4,7 +4,7 @@
             <div style="max-width:420px; margin:auto; padding:24px; border-radius:12px; box-shadow:0 0 12px rgba(0,0,0,0.1);">
                 <h2 style="text-align:center; margin-top:0; color:#1c1717;">SIGN UP</h2>
                 <p style="text-align:center; color:#666;">WELCOME TO NFLOWERS</p>
-                <form>
+                <form action="/register" method="post">
 
 
                     <label>Full name</label><br>
@@ -13,7 +13,7 @@
 
 
                     <label>Email</label><br>
-                    <input type="email" required
+                    <input type="email" name="email" required
                            style="width:100%; padding:10px; margin:6px 0 14px; border:1px solid #ccc; border-radius:6px;">
 
 
@@ -23,7 +23,7 @@
 
 
                     <label>Password</label><br>
-                    <input type="password" required
+                    <input type="password" name="password" required
                            style="width:100%; padding:10px; margin:6px 0 14px; border:1px solid #ccc; border-radius:6px;">
 
 
