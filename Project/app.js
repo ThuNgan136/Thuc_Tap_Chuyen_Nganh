@@ -1,6 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
-const {engine}= require('express-handlebars');
+const { engine } = require('express-handlebars');
+const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport');
 var app = express();
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -8,41 +11,93 @@ var logger = require('morgan');
 app.engine(
     'hbs',
     engine( {
-    extname: '.hbs',
-    defaultLayout: 'home',
-    partialsDir: path.join(__dirname, 'views','partials'),
-    layoutsDir: path.join(__dirname, 'views', 'layouts'),
-})
+        extname: '.hbs',
+        defaultLayout: 'layouts',
+        partialsDir: path.join(__dirname, 'views', 'partials'),
+        layoutsDir: path.join(__dirname, 'views', 'layouts')
+    })
 );
-const session = require('express-session');
 
+// Middleware session
 app.use(session({
-    secret: 'mysecretkey',      // chuỗi bí mật để mã hóa session
-    resave: false,               // không lưu session nếu không thay đổi
-    saveUninitialized: false,    // không tạo session nếu chưa có dữ liệu
-    cookie: { maxAge: 1000*60*60 } // thời gian sống cookie (1 giờ)
+    secret: 'secret_key_for_session', // đổi thành gì đó bảo mật
+    resave: true,
+    saveUninitialized: true,
+    // cookie: { maxAge: 1000 * 60 * 60 } // 1 giờ
 }));
+app.use(flash());
+//PASSPORT
+app.use(passport.initialize());
+app.use(passport.session());
 
-
+// You might also need custom middleware to make flash messages available in templates
+app.use((req, res, next) => {
+    res.locals.user = req.user ? req.user.toObject() : null;
+    res.locals.success_message = req.flash('success_message');
+    res.locals.error_message = req.flash('error_message');
+    res.locals.error = req.flash('error'); // Passport.js often uses 'error'
+    res.locals.errors = req.flash('errors');
+    next();
+});
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
-var shopRouter = require('./routes/shop');
 var usersRouter = require('./routes/users');
-const {Router} = require('express');
+console.log(path.join(__dirname, 'views', 'layouts'));
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+
+app.set('view engine', 'hbs');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
+
+app.use('/', indexRouter);
+app.use('/admin', adminRouter);
+app.use('/users', usersRouter);
+
+//var shopRouter = require('./routes/shop');
 const mongoose = require('mongoose');
-const User = require('./models/User');
 const bodyParser = require('body-parser');
+const {Strategy: LocalStrategy} = require("passport-local");
+const User = require('./models/User');
 const bcryptjs = require('bcryptjs');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
+app.use(bodyParser.urlencoded({ extended: true }));
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://127.0.0.1/node')
     .then(()=>{
-        console.log('MongoDB Connected Successfully!!!!');
+        console.log("MongoDB connected successfully!");
     })
-    .catch((err)=>{
-        console.log('MongoDB Connected Error:', err);
+    .catch(err => {
+        console.error("Error connecting to MongDB:", err);
     });
+
+app.post('/login', (req, res) => {
+    User.findOne({email: req.body.email}).then((user) => {
+        if (user) {
+            bcryptjs.compare(req.body.password,user.password,(err,matched)=>{
+                if(err) return err;
+                if(matched){
+                    //res.send("User was logged in");
+                    req.session.user =
+                        {
+                            id:user._id,
+                            email:user.email,
+                        };
+                    res.redirect('/');
+                }else {
+                    res.send("Email hoac mat khau khong dung");
+                }
+            });
+        }else{
+            res.send("User khong ton tai");
+        }
+    })
+});
 app.post('/signup', async (req, res) => {
     try {
         const { email, phone, password } = req.body;
@@ -77,34 +132,6 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-
-app.post('/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ message: "User not found" });
-
-        const match = await bcryptjs.compare(password, user.password);
-        if (!match) return res.status(400).json({ message: "Wrong password" });
-
-        req.session.user = { email: user.email, phone: user.phone };
-        res.json({ user: req.session.user, redirect: "/home/index" });
-    } catch (err) {
-        res.status(500).json({ message: "Server error" });
-    }
-});
-
-
-app.post('/logout', (req, res) => {
-    req.session.destroy(err => {
-        if (err) return res.status(500).json({ message: "Logout failed" });
-        res.json({ message: "Logged out" });
-    });
-});
-app.get('/home/index', (req, res) => {
-    if (!req.session.user) return res.redirect('/login');
-    res.render('home/index', { user: req.session.user });
-});
 app.post('/register',  (req,res) => {
         console.log(req.body);
         const newUser = new User();
@@ -126,44 +153,45 @@ app.post('/register',  (req,res) => {
     }
 );
 
-
-
-
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.error(err);
+            return res.redirect('/'); // nếu lỗi vẫn redirect về trang chính
+        }
+        // Xóa cookie session
+        res.clearCookie('connect.sid');
+        // Sau đó redirect về login
+        res.redirect('/login');
+    });
+});
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 app.use((req, res, next) => {
     res.locals.user = req.session.user || null;
     next();
 });
-app.use('/', indexRouter);
-app.use('/shop',shopRouter);
-app.use('/admin', adminRouter);
-app.use('/users', usersRouter);
+
+
+
 
 
 // catch 404 and forward to error handler
-app.use(function(req,
-                 res, next) {
-  next(createError(404));
+app.use(function(req, res, next) {
+    next(createError(404));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;

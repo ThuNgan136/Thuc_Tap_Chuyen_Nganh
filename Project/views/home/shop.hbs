@@ -1,148 +1,323 @@
-<style>
-    .product-card {
-        overflow: hidden;
-        width: 90%;
-        margin: auto;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-        background: #fff;
-        border-radius: 12px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Hoa & Giỏ Hàng</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin:0;
+            background: #f7f7f7;
+        }
 
-    .product-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-    }
+        h2 { font-family:'Playfair Display',serif; }
 
-    .product-card img {
-        width: 100%;
-        display: block;
-        border-radius: 12px 12px 0 0; /* bo nhẹ phía trên */
-        transition: transform 0.3s ease;
-    }
+        /* ---- Shop ---- */
+        .product-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            padding: 50px 5%;
+        }
+        .product-card {
+            overflow: hidden;
+            width: 100%;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            background: #fff;
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover { transform: translateY(-6px); box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
+        .product-card img { width: 100%; display: block; border-radius: 12px 12px 0 0; transition: transform 0.3s ease; }
+        .product-card img:hover { transform: scale(1.05); }
+        .product-info { text-align: center; padding: 16px; }
+        .product-title { font-size: 18px; font-weight: 600; margin: 0; color: #221f1b; }
+        .product-price { color: #e9a1a1; font-weight: bold; margin: 6px 0 12px 0; font-size: 16px; }
+        .btn-add-cart {
+            background-color: #e9a1a1;
+            color:white;
+            border:none;
+            border-radius:8px;
+            padding: 10px 22px;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .btn-add-cart:hover { opacity: 0.85; transform: translateY(-2px); }
 
-    .product-card img:hover {
-        transform: scale(1.05);
-    }
+        /* ---- Cart ---- */
+        .cart-container {
+            width: 90%;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .cart-item { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .cart-item img { width: 120px; height: 120px; object-fit: cover; border-radius: 10px; margin-right: 20px; }
+        .cart-info h4 { margin: 0; font-size: 20px; font-family: 'Playfair Display', serif; }
+        .cart-price { color: #e11d48; font-weight: bold; margin-top: 5px; font-size: 18px; }
+        .btn-cart { padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; font-weight: 600; }
+        .btn-delete { background-color: #e11d48; color: #fff; margin-left: auto; }
+        .btn-delete:hover { background-color: #be123c; }
+        .btn-order { background-color: #5ca0d3; color: #fff; display: block; width: 200px; margin: 20px auto 0; }
+        .btn-order:hover { background-color: #3b82f6; }
+        .quantity-control { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+        .quantity-control button { width: 28px; height: 28px; border: 1px solid #ccc; background: #fff; cursor: pointer; font-weight: bold; border-radius: 4px; }
+        .quantity-control span { min-width: 20px; text-align: center; display: inline-block; }
+        #order-message { display: none; text-align: center; margin-top: 15px; color: #fff; background: #5ca0d3; padding: 12px; border-radius: 8px; font-weight: bold; }
+        .btn-back { background: #ccc; color: #000; width: 200px; display: block; margin: 10px auto; }
+        #cart-message {display:none;position:fixed;top:20px;right:20px;padding:12px 20px;background:#5ca0d3;color:#fff;border-radius:8px;font-weight:bold;z-index:999;}
+    </style>
+</head>
+<body>
 
-    .product-info {
-        text-align: center;
-        padding: 16px;
-    }
+<!-- Notification -->
+<div id="cart-message">Sản phẩm đã được thêm vào giỏ hàng!</div>
 
-    .product-title {
-        font-size: 18px;
-        font-weight: 600;
-        margin: 0;
-        color: #221f1b;
-    }
-
-    .product-price {
-        color: #e9a1a1;
-        font-weight: bold;
-        margin: 6px 0 12px 0;
-        font-size: 16px;
-    }
-
-    .add-cart-btn {
-        background-color: #e9a1a1;
-        color:white;
-        border:none;
-        border-radius:8px;
-        padding: 10px 22px;
-        font-weight: bold;
-        font-size: 14px;
-        text-transform: uppercase;
-        transition: 0.3s;
-    }
-
-    .add-cart-btn:hover {
-        opacity: 0.85;
-        transform: translateY(-2px);
-    }
-
-    /* Grid */
-    .product-row {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 25px;
-        padding: 50px 5%;
-    }
-</style>
-
-<div class="product-row">
-
-    <div class="product-card">
-        <img src="img/6.jpg" alt="White Roses">
-        <div class="product-info">
-            <p class="product-title">White Roses</p>
-            <p class="product-price">$68.00</p>
-            <a href="#" class="add-cart-btn">Buy Now</a>
+<!-- Shop -->
+<div id="shop-section">
+    <h2 style="text-align:center;">Shop Hoa</h2>
+    <div class="product-row">
+        <div class="product-card">
+            <img src="img/6.jpg" alt="White Roses">
+            <div class="product-info">
+                <p class="product-title">White Roses</p>
+                <p class="product-price">1.200.000₫</p>
+                <button class="btn-add-cart"
+                        data-name="White Roses"
+                        data-price="1200000"
+                        data-img="img/6.jpg">Buy now</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="img/5.jpg" alt="Sunflower">
+            <div class="product-info">
+                <p class="product-title">Sunflower</p>
+                <p class="product-price">980.000₫</p>
+                <button class="btn-add-cart"
+                        data-name="Sunflower"
+                        data-price="980000"
+                        data-img="img/5.jpg">Buy now</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="img/8.jpg" alt="Cactus">
+            <div class="product-info">
+                <p class="product-title">Cactus</p>
+                <p class="product-price">1.020.000₫</p>
+                <button class="btn-add-cart"
+                        data-name="Cactus"
+                        data-price="1020000"
+                        data-img="img/8.jpg">Buy now</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="img/7.jpg" alt="Tulips">
+            <div class="product-info">
+                <p class="product-title">Tulips</p>
+                <p class="product-price">620.000₫</p>
+                <button class="btn-add-cart"
+                        data-name="Tulips"
+                        data-price="620000"
+                        data-img="img/7.jpg">Buy now</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="img/9.jpg" alt="Tulips">
+            <div class="product-info">
+                <p class="product-title">Tulips</p>
+                <p class="product-price">950.000₫</p>
+                <button class="btn-add-cart"
+                        data-name="Tulips"
+                        data-price="950000"
+                        data-img="img/9.jpg">Buy now</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="img/10.jpg" alt="Red rose">
+            <div class="product-info">
+                <p class="product-title">Red rose</p>
+                <p class="product-price">950.000₫</p>
+                <button class="btn-add-cart"
+                        data-name="Red rose"
+                        data-price="950000"
+                        data-img="img/10.jpg">Buy now</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="img/11.jpg" alt="Hydrangea">
+            <div class="product-info">
+                <p class="product-title">Hydrangea</p>
+                <p class="product-price">950.000₫</p>
+                <button class="btn-add-cart"
+                        data-name="Tulips"
+                        data-price="950000"
+                        data-img="img/11.jpg">Buy now</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="img/12.jpg" alt="Tulips">
+            <div class="product-info">
+                <p class="product-title">Tulips</p>
+                <p class="product-price">950.000₫</p>
+                <button class="btn-add-cart"
+                        data-name="Tulips"
+                        data-price="950000"
+                        data-img="img/12.jpg">Buy now</button>
+            </div>
         </div>
     </div>
-
-    <div class="product-card">
-        <img src="img/5.jpg" alt="Sunflower">
-        <div class="product-info">
-            <p class="product-title">Sunflower</p>
-            <p class="product-price">$45.00</p>
-            <a href="#" class="add-cart-btn">Buy Now</a>
-        </div>
-    </div>
-
-    <div class="product-card">
-        <img src="img/8.jpg" alt="Cactus">
-        <div class="product-info">
-            <p class="product-title">Cactus</p>
-            <p class="product-price">$25.00</p>
-            <a href="#" class="add-cart-btn">Buy Now</a>
-        </div>
-    </div>
-
-    <div class="product-card">
-        <img src="img/7.jpg" alt="Tulips">
-        <div class="product-info">
-            <p class="product-title">Tulips</p>
-            <p class="product-price">$62.00</p>
-            <a href="#" class="add-cart-btn">Buy Now</a>
-        </div>
-    </div>
-
-    <div class="product-card">
-        <img src="img/9.jpg" alt="Tulips">
-        <div class="product-info">
-            <p class="product-title">Tulips</p>
-            <p class="product-price">$85.00</p>
-            <a href="#" class="add-cart-btn">Buy Now</a>
-        </div>
-    </div>
-
-    <div class="product-card">
-        <img src="img/10.jpg" alt="Red Roses">
-        <div class="product-info">
-            <p class="product-title">Red Roses</p>
-            <p class="product-price">$90.00</p>
-            <a href="#" class="add-cart-btn">Buy Now</a>
-        </div>
-    </div>
-
-    <div class="product-card">
-        <img src="img/11.jpg" alt="Hydrangea">
-        <div class="product-info">
-            <p class="product-title">Hydrangea</p>
-            <p class="product-price">$30.00</p>
-            <a href="#" class="add-cart-btn">Buy Now</a>
-        </div>
-    </div>
-
-    <div class="product-card">
-        <img src="img/12.jpg" alt="Flower Basket">
-        <div class="product-info">
-            <p class="product-title">Flower Basket</p>
-            <p class="product-price">$55.00</p>
-            <a href="#" class="add-cart-btn">Buy Now</a>
-        </div>
-    </div>
-
-
 </div>
+
+<!-- Cart -->
+<div id="cart-section" style="display:none;">
+    <h2 style="text-align:center;">Giỏ hàng của bạn</h2>
+    <div class="cart-container">
+        <div id="cart-list"></div>
+        <button class="btn-cart btn-order" id="btn-order">Đặt hàng</button>
+        <button class="btn-cart btn-back" id="btn-back">← Quay lại shop</button>
+        <div id="order-message">Sản phẩm đã được đặt, đang chờ xác nhận!</div>
+    </div>
+</div>
+
+<script>
+    const cartMessage = document.getElementById('cart-message');
+    const addButtons = document.querySelectorAll('.btn-add-cart');
+
+    addButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const product = {
+                name: btn.dataset.name,
+                price: Number(btn.dataset.price),
+                img: btn.dataset.img,
+                qty: 1
+            };
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existing = cart.find(item => item.name === product.name && item.img === product.img);
+
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push(product);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Hiện thông báo
+            cartMessage.style.display = 'block';
+            setTimeout(() => { cartMessage.style.display = 'none'; }, 800);
+        });
+    });
+
+    // ---- Chuyển giữa Shop và Cart ----
+    const shopSection = document.getElementById('shop-section');
+    const cartSection = document.getElementById('cart-section');
+    const btnBack = document.getElementById('btn-back');
+
+    // Mở giỏ hàng khi truy cập /cart (giả lập)
+    function openCart() {
+        shopSection.style.display = 'none';
+        cartSection.style.display = 'block';
+        renderCart();
+    }
+
+    btnBack.addEventListener('click', () => {
+        cartSection.style.display = 'none';
+        shopSection.style.display = 'block';
+    });
+
+    // ---- Giỏ hàng ----
+    const cartList = document.getElementById("cart-list");
+    const btnOrder = document.getElementById("btn-order");
+    const orderMessage = document.getElementById("order-message");
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); }
+
+    function attachEvents() {
+        document.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const index = btn.dataset.index;
+                cart.splice(index, 1);
+                saveCart();
+                renderCart();
+            });
+        });
+        document.querySelectorAll('.increase').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const index = btn.dataset.index;
+                cart[index].qty += 1;
+                saveCart();
+                renderCart();
+            });
+        });
+        document.querySelectorAll('.decrease').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const index = btn.dataset.index;
+                if(cart[index].qty>1){ cart[index].qty-=1; saveCart(); renderCart();}
+            });
+        });
+    }
+
+    function renderCart() {
+        if(cart.length===0){
+            cartList.innerHTML = "<p>Giỏ hàng đang trống.</p>";
+            return;
+        }
+
+        cartList.innerHTML = "";
+        let totalAll = 0;
+
+        cart.forEach((item,index)=>{
+            const totalPrice = item.price*item.qty;
+            totalAll+=totalPrice;
+            cartList.innerHTML += `
+                <div class="cart-item">
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="cart-info">
+                        <h4>${item.name}</h4>
+                        <p class="cart-price">Giá: ${Number(item.price).toLocaleString()}₫</p>
+                        <div class="quantity-control">
+                            <button class="decrease" data-index="${index}">-</button>
+                            <span>${item.qty}</span>
+                            <button class="increase" data-index="${index}">+</button>
+                        </div>
+                        <p class="cart-price">Tổng: ${totalPrice.toLocaleString()}₫</p>
+                    </div>
+                    <button class="btn-cart btn-delete" data-index="${index}">Xóa</button>
+                </div>
+            `;
+        });
+
+        cartList.innerHTML += `
+            <h3 style="text-align:right;margin-top:20px;font-family:'Playfair Display';">
+                Tổng đơn hàng: ${totalAll.toLocaleString()}₫
+            </h3>
+        `;
+
+        attachEvents();
+    }
+
+    btnOrder.addEventListener('click', () => {
+        if(cart.length===0){ alert("Giỏ hàng đang trống!"); return; }
+        orderMessage.style.display = 'block';
+        setTimeout(()=>{ orderMessage.style.display='none'; },2500);
+        localStorage.removeItem('cart');
+        cart = [];
+        renderCart();
+    });
+
+    // ---- Mở Cart bằng hàm (có thể dùng nút) ----
+    // Mình tạo demo: nhấn Shift+O mở giỏ hàng
+    document.addEventListener('keydown', e => { if(e.shiftKey && e.key==='O') openCart(); });
+
+</script>
+</body>
+</html>
