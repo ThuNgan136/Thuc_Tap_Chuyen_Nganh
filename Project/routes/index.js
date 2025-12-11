@@ -49,7 +49,6 @@ router.get('/login', function(req, res, next) {
 });
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect:'/admin',
         failureRedirect: '/login',
         failureFlash: true
     })(req, res, () => {
@@ -82,7 +81,7 @@ router.get('/signup', function(req, res, next) {
 router.post('/signup', function(req, res, next) {
     let errors = [];
     if (!req.body.firstName) {
-        errors.push({message: 'First name is required 1'});
+        errors.push({message: 'First name is required '});
     }
     if (!req.body.lastName) {
         errors.push({message: 'Last name is required'});
@@ -120,7 +119,7 @@ router.post('/signup', function(req, res, next) {
                 })
             } else {
                 req.flash('error_message', 'E-mail is exist!');
-                res.redirect('/login');
+                res.redirect('/signup');
             }
 
         });
