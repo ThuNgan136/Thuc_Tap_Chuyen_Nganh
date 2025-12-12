@@ -14,7 +14,7 @@
             rel="stylesheet">
 
     <!-- Icon Fonts -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries -->
@@ -46,35 +46,25 @@
                 <a href="/pages" class="nav-item nav-link">Pages</a>
                 <a href="/shop" class="nav-item nav-link">Shop</a>
                 <a href="/contact" class="nav-item nav-link">Contact</a>
-            </div>
-            <a href="/cart" class="cart-icon"  style="position:relative;">
-                <i class="fa fa-shopping-cart"></i>
-                <span id="cart-count"></span>
-            </a>
+
+                <a href="/cart" class="nav-item nav-link">
+                    <i class="fa fa-shopping-cart"></i>
+
+                </a>
 
                 {{#if user}}
-                    <span style="color:#ffb6c1; margin-right:12px;">Welcome, {{user.email}}</span>
-                    <button id="logoutBtn"
-                            style="color:#ffb6c1; border:2px solid #ffb6c1; background-color:transparent; border-radius:6px; padding:6px 16px;
-                            cursor:pointer; transition:0.3s;"><a href="/logout">Logout</a>
-
-                    </button>
+                    <span class="nav-item nav-link text-secondary">Welcome{{user.firstName}}</span>
+                    <a id="logoutBtn" class="nav-item nav-link text-secondary" href="/logout">Logout</a></span>
                 {{else}}
-                    <a href="/login"
-                       class="nav-item nav-link"
-                       style="color:#ffb6c1; border:2px solid #ffb6c1; background-color:transparent; border-radius:6px; padding:6px 16px; transition:0.3s;">
-                        Login
+                    <a href="/login" class="nav-item nav-link  border border-2 mx-2 ">Login
                     </a>
 
-                    <a href="/signup"
-                       class="nav-item nav-link"
-                       style="color:#ffb6c1; border:2px solid #ffb6c1; background-color:transparent; border-radius:6px; padding:6px 16px; transition:0.3s;">
-                        Sign Up
-                    </a>
+                    <a href="/signup" class="nav-item nav-link  border border-2 ">Signup</a>
                 {{/if}}
             </div>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -103,7 +93,7 @@
         const logoutBtn = document.getElementById("logoutBtn");
         if (logoutBtn) {
             logoutBtn.addEventListener("click", async () => {
-                const res = await fetch("/logout", { method: "POST" });
+                const res = await fetch("/logout", {method: "POST"});
                 const result = await res.json();
                 if (res.ok) {
                     window.location.reload();

@@ -45,18 +45,15 @@ passport.use(new LocalStrategy({usernameField: 'email'}, function (email, passwo
 }));
 
 router.get('/login', function(req, res, next) {
-    res.render('home/login', { title: 'Login N&Wool Flowers' });
+    res.render('home/login', { title: 'Login NFlowers' });
 });
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
+        successRedirect: '/',
         failureRedirect: '/login',
         failureFlash: true
-    })(req, res, () => {
-        // Lưu user vào session để header nhận được user
-        req.app.locals.user = req.user;
+    })(req, res, next);
 
-        res.redirect('/');   // Sau khi login → về trang chủ
-    });
 });
 
 passport.serializeUser((user, done) => {

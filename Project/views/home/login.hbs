@@ -5,8 +5,17 @@
 
                 <h2 style="text-align:center; margin-top:0; color:#1c1717;">LOGIN</h2>
                 <p style="text-align:center; color:#666;">WELCOME TO NFLOWERS</p>
+                {{#if error}}
+                    <div class="alert alert-danger" role="alert">
+                        {{error}}
+                    </div>
+                {{/if}}
                 <form action="/login" method="POST">
-
+                    {{#if success_message}}
+                        <div class="alert alert-success">
+                            {{success_message}}
+                        </div>
+                    {{/if}}
                 <form id="loginForm">
                     <label>Email or phone number</label><br>
                     <input type="text" name="email" required style="width:100%; padding:10px; margin:6px 0 14px; border:1px solid #ccc; border-radius:6px;">
