@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+const methodOverride = require('method-override')
 const { engine } = require('express-handlebars');
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -25,6 +26,8 @@ app.use(session({
     saveUninitialized: true,
     // cookie: { maxAge: 1000 * 60 * 60 } // 1 giờ
 }));
+//methor override
+app.use(methodOverride('_method'));
 app.use(flash());
 //PASSPORT
 app.use(passport.initialize());
@@ -39,9 +42,12 @@ app.use((req, res, next) => {
     res.locals.errors = req.flash('errors');
     next();
 });
+
+
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
+var categoryRouter = require('./routes/category');
 console.log(path.join(__dirname, 'views', 'layouts'));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -56,8 +62,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('public'));
 
 app.use('/', indexRouter);
+app.use('/admin/category', categoryRouter);
 app.use('/admin', adminRouter);
 app.use('/users', usersRouter);
+
 
 //var shopRouter = require('./routes/shop');
 const mongoose = require('mongoose');
