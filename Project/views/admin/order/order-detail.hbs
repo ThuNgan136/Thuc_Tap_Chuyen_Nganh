@@ -1,0 +1,16 @@
+<h2>Chi tiết Order: {{order._id}}</h2>
+
+<h3>Khách hàng: {{order.customer.name}}</h3>
+<p>Phone: {{order.customer.phone}}</p>
+<p>Địa chỉ: {{order.customer.address}}</p>
+<p>Thanh toán: {{order.customer.payment}}</p>
+<p>Ngày đặt: {{order.createdAt}}</p>
+
+<h4>Danh sách sản phẩm:</h4>
+<ul>
+    {{#each order.items}}
+        <li>{{name}} x {{qty}} - {{price}}</li>
+    {{/each}}
+</ul>
+
+<h3>Tổng tiền: {{order.total}}</h3>

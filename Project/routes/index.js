@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
-const User = require('../models/User');
+const User = require('../models/user');
+const Category = require('../models/category');
+const Product = require('../models/product');
+const Order = require('../models/order');
+
 const bcryptjs = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -17,10 +21,25 @@ router.get('/', function(req, res, next) {
 router.get('/pages', function(req, res, next) {
     res.render('home/pages', { title: 'Trang' });
 });
+router.get('/shop', async (req, res) => {
+    try {
+        const products = await Category.find({ status: true }).lean();
 
-router.get('/shop', function(req, res, next) {
-    res.render('home/shop', { title: 'Cửa hàng' });
+        res.render('home/shop', {
+            title: 'Cửa hàng',
+            products,
+            user: req.user || null   // passport tự gắn vào khi login thành công
+        });
+    } catch (err) {
+        console.log(err);
+        res.send('Load shop failed');
+    }
 });
+
+
+// router.get('/shop', function(req, res, next) {
+//     res.render('home/shop', { title: 'Cửa hàng' });
+// });
 
 router.get('/contact', function(req, res, next) {
     res.render('home/contact', { title: 'Liên Hệ' });
@@ -69,11 +88,11 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 router.get('/forget', function(req, res, next) {
-    res.render('home/forget', { title: 'Forget N&Wool Flowers' });
+    res.render('home/forget', { title: 'Forget NFlowers' });
 });
 
 router.get('/signup', function(req, res, next) {
-    res.render('home/signup', { title: 'Sign N&Wool Flowers' });
+    res.render('home/signup', { title: 'Sign NFlowers' });
 });
 router.post('/signup', function(req, res, next) {
     let errors = [];
@@ -124,8 +143,26 @@ router.post('/signup', function(req, res, next) {
     }
 });
 
+// router.get('/cart', function(req, res, next) {
+//     res.render('home/cart', { title: 'Giỏ Hàng NFlowers' });
+// });
 router.get('/cart', function(req, res, next) {
-    res.render('home/cart', { title: 'Giỏ Hàng N&Wool Flowers' });
+    if (!req.isAuthenticated()) {
+        return res.redirect('/login');
+    }
+
+    res.render('home/cart', {
+        title: 'Giỏ Hàng NFlowers',
+        user: req.user
+    });
 });
+router.get('/bill/:id', async (req, res) => {
+    const order = await Order.findById(req.params.id).lean();
+    if(!order) return res.status(404).send("Không tìm thấy hóa đơn");
+    res.render('home/bill', { title: 'Hóa đơn', order });
+});
+
+
+
 
 module.exports = router;

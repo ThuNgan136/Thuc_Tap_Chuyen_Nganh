@@ -9,15 +9,28 @@ var app = express();
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-app.engine(
-    'hbs',
-    engine( {
-        extname: '.hbs',
-        defaultLayout: 'layouts',
-        partialsDir: path.join(__dirname, 'views', 'partials'),
-        layoutsDir: path.join(__dirname, 'views', 'layouts')
-    })
-);
+
+
+app.engine('hbs', engine({
+    extname: '.hbs',
+    defaultLayout: 'layouts',
+    partialsDir: path.join(__dirname, 'views/partials'),
+    layoutsDir: path.join(__dirname, 'views/layouts'),
+    helpers: {
+        // tính tổng tiền 1 sản phẩm
+        calcTotal: (price, qty) => {
+            return (price * qty).toLocaleString() + '₫';
+        },
+        // format tổng tiền
+        formatPrice: (price) => {
+            return Number(price).toLocaleString() + '₫';
+        }
+    }
+}));
+
+
+app.set('view engine', 'hbs');
+
 
 // Middleware session
 app.use(session({
@@ -71,7 +84,7 @@ app.use('/users', usersRouter);
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const {Strategy: LocalStrategy} = require("passport-local");
-const User = require('./models/User');
+const User = require('./models/user');
 const bcryptjs = require('bcryptjs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -173,6 +186,43 @@ app.get('/logout', (req, res) => {
         res.redirect('/login');
     });
 });
+const Order = require('./models/Order');
+
+// POST tạo order
+app.post('/order', async (req,res) => {
+    try{
+        const { customer, items } = req.body;
+        if(!customer || !items || items.length === 0)
+            return res.status(400).json({ error: "Dữ liệu không hợp lệ" });
+
+        const total = items.reduce((sum,i)=> sum + i.price*i.qty, 0);
+
+        const order = new Order({ customer, items, total });
+        await order.save();
+
+        res.json({ success:true, orderId: order._id });
+    } catch(err){
+        console.error(err);
+        res.status(500).json({ error: "Lỗi server" });
+    }
+});
+
+// GET hiển thị bill theo order ID
+app.get('/bill/:id', async (req,res) => {
+    try {
+        const order = await Order.findById(req.params.id).lean();
+        if(!order) return res.status(404).send("Không tìm thấy hóa đơn");
+
+        res.render('bill', { order });
+    } catch(err) {
+        console.error(err);
+        res.status(500).send("Lỗi server");
+    }
+});
+
+
+
+
 
 // view engine setup
 

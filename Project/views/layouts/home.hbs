@@ -47,14 +47,15 @@
                 <a href="/shop" class="nav-item nav-link">Shop</a>
                 <a href="/contact" class="nav-item nav-link">Contact</a>
 
-                <a href="/cart" class="nav-item nav-link">
+                <a href="/cart" class="nav-item nav-link cart-link">
                     <i class="fa fa-shopping-cart"></i>
-
+                    <span id="cart-count" class="cart-count">0</span>
                 </a>
 
+
                 {{#if user}}
-                    <span class="nav-item nav-link text-secondary">Welcome  {{user.firstName}}</span>
-                    <a id="logoutBtn" class="nav-item nav-link text-secondary" href="/logout">Logout</a></span>
+                    <span class="nav-item nav-link text-secondary">Welcome, {{user.firstName}}</span>
+                    <a id="logoutBtn" class="nav-item nav-link  border border-2 mx-2" href="/logout">Logout</a></span>
                 {{else}}
                     <a href="/login" class="nav-item nav-link  border border-2 mx-2 ">Login
                     </a>
@@ -70,6 +71,24 @@
 
 <!-- Body -->
 {{{body}}}
+<script>
+    function updateCartIcon() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+        const badge = document.getElementById('cart-count');
+
+        if (!badge) return;
+
+        if (totalQty > 0) {
+            badge.innerText = totalQty;
+            badge.style.display = 'inline-block';
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', updateCartIcon);
+</script>
 
 <!-- Footer -->
 <footer class="bg-dark text-white text-center py-4">
