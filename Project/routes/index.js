@@ -36,7 +36,6 @@ router.get('/shop', async (req, res) => {
     }
 });
 
-
 // router.get('/shop', function(req, res, next) {
 //     res.render('home/shop', { title: 'Cửa hàng' });
 // });

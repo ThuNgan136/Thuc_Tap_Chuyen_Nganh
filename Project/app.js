@@ -17,6 +17,7 @@ app.engine('hbs', engine({
     partialsDir: path.join(__dirname, 'views/partials'),
     layoutsDir: path.join(__dirname, 'views/layouts'),
     helpers: {
+        eq: (a, b) =>{a === b} ,
         // tính tổng tiền 1 sản phẩm
         calcTotal: (price, qty) => {
             return (price * qty).toLocaleString() + '₫';
