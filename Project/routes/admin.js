@@ -3,7 +3,32 @@ var router = express.Router();
 const Category = require('../models/category');
 const Product = require('../models/product');
 const User = require('../models/user');
-const Order = require('../models/Order'); //
+const Order = require('../models/Order');
+
+function useAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next(); // Proceed if authenticated
+    } else {
+        res.redirect('/login'); // Redirect to login if authentication fails
+    }
+}
+router.all('/*', useAuthenticated, (req, res, next) => {
+    res.app.locals.layout = 'admin'; // Set layout for admin pages
+    next();
+});
+/* GET home page. */
+router.get('/*', function(
+    req,
+    res,
+    next) {
+    res.app.locals.layout = 'admin';
+    next();
+});
+
+router.get('/', function(req, res, next) {
+    res.render('admin/index', {title: 'Admin'}) ;
+});
+
 
 /* SET ADMIN LAYOUT */
 router.all('/*', (req, res, next) => {
