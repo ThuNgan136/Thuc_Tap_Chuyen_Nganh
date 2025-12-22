@@ -25,16 +25,16 @@ router.get('/*', function(
     next();
 });
 
-router.get('/', function(req, res, next) {
-    res.render('admin/index', {title: 'Admin'}) ;
-});
+// router.get('/', function(req, res, next) {
+//     res.render('admin/index', {title: 'Admin'}) ;
+// });
 
 
 /* SET ADMIN LAYOUT */
-router.all('/*', (req, res, next) => {
-    res.app.locals.layout = 'admin';
-    next();
-});
+// router.all('/*', (req, res, next) => {
+//     res.app.locals.layout = 'admin';
+//     next();
+// });
 
 /* DASHBOARD */
 router.get('/', async (req, res) => {
