@@ -52,7 +52,6 @@
                                         alt="{{category.name}}"
                                         class="img-preview">
                             </div>
-
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Status</label>
                                 <select
@@ -62,7 +61,10 @@
                                     <option value="false" {{#unless category.status}}selected{{/unless}}>Inactive</option>
                                 </select>
                             </div>
-
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Mô tả</label>
+                            <textarea id="description" name="description" class="form-control">{{category.description}}</textarea>
                         </div>
 
                         <div class="text-center mt-4">

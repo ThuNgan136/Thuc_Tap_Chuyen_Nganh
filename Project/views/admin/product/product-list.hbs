@@ -1,13 +1,16 @@
-<h2>Danh sách sản phẩm tồn kho</h2>
-<p><strong>Tổng giá trị tồn kho:</strong> <span id="totalValue">{{totalValue}}</span> VND</p>
-<p><strong>Tổng số lượng tồn kho:</strong> <span id="totalQty">{{totalQty}}</span></p>
+<h2 class="mb-4">Danh sách sản phẩm tồn kho</h2>
 
-<table border="1" cellpadding="8">
-    <thead>
+<div class="mb-3">
+    <p><strong>Tổng giá trị tồn kho:</strong> <span id="totalValue">{{totalValue}}</span> VND</p>
+    <p><strong>Tổng số lượng tồn kho:</strong> <span id="totalQty">{{totalQty}}</span></p>
+</div>
+
+<table class="table table-bordered table-striped align-middle">
+    <thead class="table-light">
     <tr>
         <th>Tên sản phẩm</th>
         <th>Giá (VND)</th>
-        <th>Số lượng tồn kho</th>
+        <th style="width:120px;">Số lượng tồn kho</th>
         <th>Hành động</th>
     </tr>
     </thead>
@@ -17,10 +20,10 @@
             <td>{{this.name}}</td>
             <td>{{this.price}}</td>
             <td>
-                <input type="number" class="qty-input" value="{{this.qty}}" min="0">
+                <input type="number" class="form-control qty-input" value="{{this.qty}}" min="0">
             </td>
             <td>
-                <button class="update-btn">Cập nhật</button>
+                <button class="btn btn-sm btn-primary update-btn">Cập nhật</button>
             </td>
         </tr>
     {{/each}}
@@ -42,7 +45,6 @@
                 success: function(res) {
                     if (res.success) {
                         alert('Cập nhật thành công!');
-                        // Cập nhật qty hiển thị (nếu có cột khác) và tổng
                         row.find('.qty-input').val(res.qty);
                         $('#totalQty').text(res.totalQty);
                         $('#totalValue').text(res.totalValue);
