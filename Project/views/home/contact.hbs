@@ -24,25 +24,49 @@
                 </ul>
 
 
-                <form id="contactForm" action="/contact/send" method="POST" class="row g-2">
+                <form action="/contact/send" method="POST" class="row g-2">
                     <div class="col-sm-6">
                         <input type="text" name="name" class="form-control" placeholder="Full name" required>
                     </div>
+
                     <div class="col-sm-6">
                         <input type="email" name="email" class="form-control" placeholder="Email" required>
                     </div>
+
                     <div class="col-12">
                         <input type="text" name="phone" class="form-control" placeholder="Phone number">
                     </div>
+
                     <div class="col-12">
-                        <textarea name="message" class="form-control" rows="4" placeholder="Your message/Request:" required></textarea>
+        <textarea name="message" class="form-control" rows="4"
+                  placeholder="Your message / Request" required></textarea>
                     </div>
+
                     <div class="col-12">
-                        <a href="/" class="btn btn-outline-secondary px-3 py-2 ms-2">Send mesage</a>
-                        <a href="/" class="btn btn-outline-secondary px-3 py-2 ms-2">Back</a>
+                        <button type="submit" class="btn btn-outline-secondary px-3 py-2">
+                            Send message
+                        </button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
 </section>
+<!--<script>-->
+<!--    document.getElementById('contactForm').addEventListener('submit', function (e) {-->
+<!--        e.preventDefault();-->
+
+<!--        fetch('/contact/send', {-->
+<!--            method: 'POST',-->
+<!--            body: new FormData(this)-->
+<!--        })-->
+<!--                .then(res => {-->
+<!--                    if (res.ok) {-->
+<!--                        alert('🌸 Tin nhắn của bạn đã được gửi về NFlowers!');-->
+<!--                        this.reset();-->
+<!--                    }-->
+<!--                });-->
+<!--    });-->
+<!--</script>-->
+

@@ -3,6 +3,7 @@ var router = express.Router();
 const User = require('../models/user');
 const Category = require('../models/category');
 const Product = require('../models/product');
+const Contact = require('../models/contact');
 const Order = require('../models/order');
 
 const bcryptjs = require('bcryptjs');

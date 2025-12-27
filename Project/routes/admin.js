@@ -4,6 +4,8 @@ const Category = require('../models/category');
 const Product = require('../models/product');
 const User = require('../models/user');
 const Order = require('../models/Order');
+const Contact = require('../models/contact');
+
 
 function useAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -202,13 +204,6 @@ router.post('/product/update-qty-ajax', async (req, res) => {
     }
 });
 
-
-
-
-
-
-
-
 /* CREATE ORDER */
 router.post('/', async (req,res)=>{
     console.log('req.body:', req.body);
@@ -285,6 +280,19 @@ router.post('/order/:id/status', async (req, res) => {
         res.status(500).json({ success: false, error: 'Không cập nhật được' });
     }
 });
+router.get('/contact/contact-message', async (req, res) => {
+    try {
+        const contacts = await Contact.find().lean();
+        res.render('admin/contact/contact-message', {
+            contacts
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+});
+
+
 
 // router.post('/admin/order/update-status', async (req, res) => {
 //     try {
@@ -301,6 +309,7 @@ router.post('/order/:id/status', async (req, res) => {
 //         res.json({ success: false, error: "Lỗi server" });
 //     }
 // });
+
 
 
 module.exports = router;
