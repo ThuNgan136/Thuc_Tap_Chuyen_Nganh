@@ -5,7 +5,13 @@
 
 
             <div class="col-lg-6">
-                <img src="img/13.jpg" alt="Flowers" class="img-fluid contact-img rounded-4 shadow-sm">
+                {{#if setting.contactImage}}
+                    <img src="{{setting.contactImage}}" alt="Flowers"
+                         class="img-fluid contact-img rounded-4 shadow-sm">
+                {{else}}
+                    <img src="/img/13.jpg" alt="Flowers"
+                         class="img-fluid contact-img rounded-4 shadow-sm">
+                {{/if}}
             </div>
 
 
@@ -17,13 +23,13 @@
                 </p>
 
                 <ul class="list-unstyled contact-info mb-4">
-                    <li class="mb-2"><i class="bi bi-geo-alt-fill me-2 text-danger"></i><strong>Address</strong> 12 Nguyễn Huệ, Quận 1, TP.HCM</li>
-                    <li class="mb-2"><i class="bi bi-telephone-fill me-2 text-danger"></i><strong>Hotline:</strong> 03 2678 3254</li>
-                    <li class="mb-2"><i class="bi bi-envelope-fill me-2 text-danger"></i><strong>Email:</strong> nlflowers@gmail.com</li>
-                    <li><i class="bi bi-clock-fill me-2 text-danger"></i><strong>Opening Hours</strong> 08:00 - 21:00 (Daily)</li>
+                    <p><strong>Address:</strong> {{setting.address}}</p>
+                    <p><strong>Hotline:</strong> {{setting.hotline}}</p>
+                    <p><strong>Email:</strong> {{setting.email}}</p>
+                    <p><strong>Opening Hours:</strong> {{setting.openingHours}}</p>
+
+
                 </ul>
-
-
                 <form action="/contact/send" method="POST" class="row g-2">
                     <div class="col-sm-6">
                         <input type="text" name="name" class="form-control" placeholder="Full name" required>
@@ -53,20 +59,5 @@
         </div>
     </div>
 </section>
-<!--<script>-->
-<!--    document.getElementById('contactForm').addEventListener('submit', function (e) {-->
-<!--        e.preventDefault();-->
 
-<!--        fetch('/contact/send', {-->
-<!--            method: 'POST',-->
-<!--            body: new FormData(this)-->
-<!--        })-->
-<!--                .then(res => {-->
-<!--                    if (res.ok) {-->
-<!--                        alert('🌸 Tin nhắn của bạn đã được gửi về NFlowers!');-->
-<!--                        this.reset();-->
-<!--                    }-->
-<!--                });-->
-<!--    });-->
-<!--</script>-->
 

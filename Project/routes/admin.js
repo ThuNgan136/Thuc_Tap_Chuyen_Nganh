@@ -5,35 +5,25 @@ const Product = require('../models/product');
 const User = require('../models/user');
 const Order = require('../models/Order');
 const Contact = require('../models/contact');
+const Setting = require('../models/setting');
 
 
-function useAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next(); // Proceed if authenticated
-    } else {
-        res.redirect('/login'); // Redirect to login if authentication fails
-    }
-}
-router.all('/*', useAuthenticated, (req, res, next) => {
+// function useAuthenticated(req, res, next) {
+//     if (req.isAuthenticated()) {
+//         return next(); // Proceed if authenticated
+//     } else {
+//         res.redirect('/login'); // Redirect to login if authentication fails
+//     }
+// }
+router.all('/*', (req, res, next) => {
     res.app.locals.layout = 'admin'; // Set layout for admin pages
     next();
 });
 /* GET home page. */
-router.get('/*', function(
-    req,
-    res,
-    next) {
-    res.app.locals.layout = 'admin';
-    next();
-});
-
-// router.get('/', function(req, res, next) {
-//     res.render('admin/index', {title: 'Admin'}) ;
-// });
-
-
-/* SET ADMIN LAYOUT */
-// router.all('/*', (req, res, next) => {
+// router.get('/*', function(
+//     req,
+//     res,
+//     next) {
 //     res.app.locals.layout = 'admin';
 //     next();
 // });
@@ -225,8 +215,7 @@ router.post('/', async (req,res)=>{
     }
 });
 
-/* LIST ORDERS */
-// routes/admin.js
+
 // routes/admin.js
 router.get('/order', async (req, res) => {
     try {
@@ -291,24 +280,69 @@ router.get('/contact/contact-message', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+// ===== CONTACT SETTING =====
 
+// GET: hiển thị form
+// router.get('/contact-setting', async (req, res) => {
+//     const setting = await Setting.findOne().lean();
+//     res.render('admin/settings/contact-setting', { setting });
+// });
 
-
-// router.post('/admin/order/update-status', async (req, res) => {
+// POST: lưu dữ liệu 👈 BẠN ĐANG THIẾU CÁI NÀY
+// router.post('/contact-setting', async (req, res) => {
 //     try {
-//         const { orderId, status } = req.body;
-//         const order = await Order.findByIdAndUpdate(
-//             orderId,
-//             { status },
-//             { new: true }
+//         console.log('SAVE CONTACT SETTING:', req.body);
+//
+//         await Setting.findOneAndUpdate(
+//             {},
+//             req.body,
+//             { upsert: true, new: true }
 //         );
-//         if (!order) return res.json({ success: false, error: "Không tìm thấy order" });
-//         res.json({ success: true, status: order.status });
+//
+//         res.redirect('/admin/contact-setting');
 //     } catch (err) {
 //         console.error(err);
-//         res.json({ success: false, error: "Lỗi server" });
+//         res.send('Save failed');
 //     }
 // });
+//
+
+// GET contact setting
+router.get('/settings/contact-setting', async (req, res) => {
+    const setting = await Setting.findOne().lean();
+    res.render('admin/settings/contact-setting', { setting });
+});
+
+// POST contact setting  🔥 BẮT SAVE
+router.post('/settings/contact-setting', async (req, res) => {
+    console.log('POST CONTACT SETTING:', req.body); // 👈 TEST
+
+    await Setting.findOneAndUpdate(
+        {},
+        req.body,
+        { upsert: true }
+    );
+
+    res.redirect('/admin/settings/contact-setting');
+});
+
+/* GET pages-setting */
+router.get('/settings/pages-setting', async (req, res) => {
+    const setting = await Setting.findOne().lean();
+    res.render('admin/settings/pages-setting', { setting });
+});
+
+/* POST pages-setting */
+router.post('/settings/pages-setting', async (req, res) => {
+    await Setting.findOneAndUpdate({}, req.body, {
+        upsert: true
+    });
+    res.redirect('/admin/settings/pages-setting');
+});
+
+
+
+
 
 
 

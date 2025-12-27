@@ -1,0 +1,96 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Contact Settings</h2>
+
+    <form method="POST" action="/admin/settings/contact-setting">
+
+        <!-- CONTACT TITLE -->
+        <div class="mb-3">
+            <label class="form-label">Contact Title</label>
+            <input
+                    type="text"
+                    name="contactTitle"
+                    class="form-control"
+                    value="{{setting.contactTitle}}"
+                    placeholder="Contact NFlowers">
+        </div>
+
+        <!-- CONTACT DESCRIPTION -->
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea
+                    name="contactDescription"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Contact description...">{{setting.contactDescription}}</textarea>
+        </div>
+
+        <!-- CONTACT IMAGE (URL) -->
+        <div class="mb-3">
+            <label class="form-label">Contact Image URL</label>
+            <input
+                    type="text"
+                    name="contactImage"
+                    class="form-control"
+                    placeholder="https://example.com/image.jpg"
+                    value="{{setting.contactImage}}">
+        </div>
+
+        {{#if setting.contactImage}}
+            <div class="mb-3">
+                <label class="form-label">Preview</label><br>
+                <img
+                        src="{{setting.contactImage}}"
+                        alt="Contact image"
+                        style="max-width: 300px; border-radius: 10px;">
+            </div>
+        {{/if}}
+
+        <hr>
+
+        <!-- ADDRESS -->
+        <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input
+                    type="text"
+                    name="address"
+                    class="form-control"
+                    value="{{setting.address}}">
+        </div>
+
+        <!-- HOTLINE -->
+        <div class="mb-3">
+            <label class="form-label">Hotline</label>
+            <input
+                    type="text"
+                    name="hotline"
+                    class="form-control"
+                    value="{{setting.hotline}}">
+        </div>
+
+        <!-- EMAIL -->
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    value="{{setting.email}}">
+        </div>
+
+        <!-- OPENING HOURS -->
+        <div class="mb-4">
+            <label class="form-label">Opening Hours</label>
+            <input
+                    type="text"
+                    name="openingHours"
+                    class="form-control"
+                    value="{{setting.openingHours}}">
+        </div>
+
+        <!-- SAVE -->
+        <button type="submit" class="btn btn-primary px-4">
+            Save Settings
+        </button>
+
+    </form>
+</div>

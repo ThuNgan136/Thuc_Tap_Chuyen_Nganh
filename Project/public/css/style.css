@@ -1,3 +1,52 @@
+/* ===== HERO ===== */
+.hero-section {
+    position: relative;
+}
+.hero-img {
+    height: 500px;
+    object-fit: cover;
+}
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.25); /* overlay tối nhẹ */
+}
+.hero-text-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255,255,255,0.7);
+    padding: 20px 30px;
+    border-radius: 8px;
+    text-align: center;
+}
+.hero-text-container h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: bold;
+    color: #221f1b;
+}
+
+/* ===== BEST SELLER ===== */
+.best-seller-title h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: bold;
+    color: #221f1b;
+    margin-bottom: 20px;
+}
+
+.best-card-img {
+    border-radius: 12px;
+    transition: 0.3s ease;
+}
+.best-card-img:hover {
+    transform: scale(1.04);
+}
 
 /*** Spinner Start ***/
 .quick-view {

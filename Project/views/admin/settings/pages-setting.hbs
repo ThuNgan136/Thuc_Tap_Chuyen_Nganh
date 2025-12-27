@@ -1,0 +1,35 @@
+<h2>Pages Settings</h2>
+
+<form method="POST">
+    <div>
+        <label>Pages Title</label>
+        <input type="text" name="pagesTitle" value="{{setting.pagesTitle}}">
+    </div>
+
+    <div>
+        <label>Pages Subtitle</label>
+        <input type="text" name="pagesSubtitle" value="{{setting.pagesSubtitle}}">
+    </div>
+
+    <div>
+        <label>Banner Image (URL)</label>
+        <input type="text" name="pagesBannerImage" value="{{setting.pagesBannerImage}}">
+    </div>
+
+    <div>
+        <label>Heading</label>
+        <input type="text" name="pagesHeading" value="{{setting.pagesHeading}}">
+    </div>
+
+    <div>
+        <label>Content</label>
+        <textarea name="pagesContent">{{setting.pagesContent}}</textarea>
+    </div>
+
+    <div>
+        <label>Main Image (URL)</label>
+        <input type="text" name="pagesImage" value="{{setting.pagesImage}}">
+    </div>
+
+    <button type="submit">Save</button>
+</form>

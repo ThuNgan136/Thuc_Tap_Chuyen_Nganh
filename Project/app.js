@@ -81,6 +81,8 @@ app.use('/admin', adminRouter);
 app.use('/users', usersRouter);
 
 
+
+
 //var shopRouter = require('./routes/shop');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -88,8 +90,8 @@ const {Strategy: LocalStrategy} = require("passport-local");
 const User = require('./models/user');
 const Contact = require('./models/contact');
 const Order = require('./models/order');
-
 const bcryptjs = require('bcryptjs');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.Promise = global.Promise;
